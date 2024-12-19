@@ -1,4 +1,4 @@
-<div class="max-w-md mx-auto mt-40 p-6 bg-white dark:bg-gray-800 shadow-lg rounded-lg">
+<div class="max-w-md mx-auto mt-20 sm:mt-40 p-6 bg-white dark:bg-gray-800 shadow-lg rounded-lg">
     <div class="mb-10">
         <h1 class="text-2xl font-bold mb-6 text-center text-gray-800 dark:text-gray-200">
             Selamat Berkunjung👋🏻

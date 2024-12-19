@@ -1,4 +1,4 @@
-<div class="max-w-md mx-auto mt-28 sm:mt-40 p-6 bg-white dark:bg-gray-800 shadow-lg rounded-lg">
+<div class="max-w-md mx-auto mt-20 sm:mt-40 p-6 bg-white dark:bg-gray-800 shadow-lg rounded-lg">
     
     <img src="{{asset('images/brand.png')}}" alt="" class="h-200 mb-5">
     
