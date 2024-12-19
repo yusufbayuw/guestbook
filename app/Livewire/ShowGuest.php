@@ -48,7 +48,7 @@ class ShowGuest extends Component implements HasForms, HasInfolists
         $minutesDifference = $guest->pulang->diffInMinutes($guest->datang) % 60;
 
         $decimalHours = $hoursDifference + ($minutesDifference / 60);
-        $guest->lama_kunjungan = abs($decimalHours);
+        $guest->lama_kunjungan = number_format(abs($decimalHours),3);
 
         $guest->save();
 

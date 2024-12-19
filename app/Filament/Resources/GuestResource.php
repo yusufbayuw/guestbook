@@ -9,6 +9,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -51,11 +52,13 @@ class GuestResource extends Resource
                 Tables\Columns\TextColumn::make('nama')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nomor_hp')
-                    ->searchable(),
+                    ->searchable()
+                    ->copyable(),
                 Tables\Columns\TextColumn::make('alamat')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('keperluan')
-                    ->searchable(),
+                    ->searchable()
+                    ->wrap(),
                 Tables\Columns\TextColumn::make('datang')
                     ->searchable()
                     ->sortable(),
@@ -81,6 +84,18 @@ class GuestResource extends Resource
                 //
             ])
             ->actions([
+                Action::make('pulang')
+                    ->action(function ($record) {
+                        $record->pulang = now();
+                        $hoursDifference = $record->pulang->diffInHours($record->datang);
+                        $minutesDifference = $record->pulang->diffInMinutes($record->datang) % 60;
+
+                        $decimalHours = $hoursDifference + ($minutesDifference / 60);
+                        $record->lama_kunjungan = number_format(abs($decimalHours), 3);
+
+                        $record->save();
+                    })
+                    ->hidden(fn ($record) => $record->pulang ? true : false),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
