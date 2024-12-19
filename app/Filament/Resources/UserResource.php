@@ -43,6 +43,9 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('logo')
                     ->maxLength(255)
                     ->default(null),
+                Forms\Components\CheckboxList::make('roles')
+                    ->relationship('roles', 'name')
+                    ->searchable(),
             ]);
     }
 
