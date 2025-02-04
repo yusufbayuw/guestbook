@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\GuestResource\Pages;
 use App\Filament\Resources\GuestResource\RelationManagers;
+use App\Models\Gedung;
 use App\Models\Guest;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -40,6 +41,10 @@ class GuestResource extends Resource
                 Forms\Components\TextInput::make('alamat')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\Radio::make('gedung_id')
+                    ->options(Gedung::all()->pluck('nama', 'id')->toArray())
+                    ->descriptions(Gedung::all()->pluck('alamat', 'id')->toArray())
+                    ->required(),
                 Forms\Components\Textarea::make('keperluan')
                     ->required(),
             ]);
@@ -55,10 +60,13 @@ class GuestResource extends Resource
                     ->searchable()
                     ->copyable(),
                 Tables\Columns\TextColumn::make('alamat')
-                    ->searchable(),
+                    ->searchable()
+                    ->wrap(),
                 Tables\Columns\TextColumn::make('keperluan')
                     ->searchable()
                     ->wrap(),
+                Tables\Columns\TextColumn::make('gedung.nama')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('datang')
                     ->searchable()
                     ->sortable(),
@@ -85,6 +93,7 @@ class GuestResource extends Resource
             ])
             ->actions([
                 Action::make('pulang')
+                    ->icon('heroicon-o-arrow-right-end-on-rectangle')
                     ->action(function ($record) {
                         $record->pulang = now();
                         $hoursDifference = $record->pulang->diffInHours($record->datang);

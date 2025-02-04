@@ -8,4 +8,10 @@
     </h2>
     @endif
     <h3 class="text-lg font-bold mb-6 text-center text-gray-800 dark:text-gray-200">Sampai jumpa kembali dikunjungan selanjutnya 😊.</h3>
+
+    <script>
+        setTimeout(function() {
+            window.location.href = "https://tarunabakti.or.id"; // Ganti dengan rute tujuan
+        }, 5000);
+    </script>
 </div>
