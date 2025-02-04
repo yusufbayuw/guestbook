@@ -8,6 +8,7 @@ use Livewire\Component;
 use Filament\Forms\Form;
 use Illuminate\Support\Str;
 use Filament\Forms\Components\Radio;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -41,10 +42,10 @@ class CreateGuest extends Component implements HasForms
                 TextInput::make('alamat')
                     ->required()
                     ->maxLength(255),
-                Radio::make('gedung_id')
+                Select::make('gedung_id')
                     ->label('Pilih Lokasi Kunjungan:')
                     ->options(Gedung::all()->pluck('nama', 'id')->toArray())
-                    ->descriptions(Gedung::all()->pluck('alamat', 'id')->toArray())
+                    //->descriptions(Gedung::all()->pluck('alamat', 'id')->toArray())
                     ->required(),
                 Textarea::make('keperluan')
                     ->required(),
