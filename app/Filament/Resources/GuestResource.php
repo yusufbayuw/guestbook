@@ -42,6 +42,7 @@ class GuestResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Radio::make('gedung_id')
+                    ->label('Pilih Lokasi Kunjungan:')
                     ->options(Gedung::all()->pluck('nama', 'id')->toArray())
                     ->descriptions(Gedung::all()->pluck('alamat', 'id')->toArray())
                     ->required(),
@@ -66,6 +67,7 @@ class GuestResource extends Resource
                     ->searchable()
                     ->wrap(),
                 Tables\Columns\TextColumn::make('gedung.nama')
+                    ->label('Gedung')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('datang')
                     ->searchable()
