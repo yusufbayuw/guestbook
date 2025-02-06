@@ -2,20 +2,21 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\GuestResource\Pages;
-use App\Filament\Resources\GuestResource\RelationManagers;
-use App\Models\Gedung;
-use App\Models\Guest;
 use Filament\Forms;
-use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Guest;
+use App\Models\Gedung;
+use Filament\Forms\Form;
+use Filament\Tables\Table;
+use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Filter;
-use Filament\Tables\Table;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Forms\Components\DatePicker;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\GuestResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\GuestResource\RelationManagers;
 
 class GuestResource extends Resource
 {
@@ -114,7 +115,8 @@ class GuestResource extends Resource
                                 fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
                             );
                     }),
-            ])
+            ], layout: FiltersLayout::AboveContent)
+            ->hiddenFilterIndicators()
             ->actions([
                 Action::make('pulang')
                     ->icon('heroicon-o-arrow-right-end-on-rectangle')
