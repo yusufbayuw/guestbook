@@ -98,11 +98,13 @@ class GuestResource extends Resource
                     ->form([
                         DatePicker::make('created_from')
                             ->label('Dari')
-                            ->maxDate(now()->subDay()),
+                            ->maxDate(now()->subDay())
+                            ->columnSpan(1),
                         DatePicker::make('created_until')
                             ->label('Sampai')
                             ->default(now())
-                            ->maxDate(now()),
+                            ->maxDate(now())
+                            ->columnSpan(1),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
