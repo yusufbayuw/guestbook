@@ -117,6 +117,7 @@ class GuestResource extends Resource
                     }),
             ], layout: FiltersLayout::AboveContent)
             ->hiddenFilterIndicators()
+            ->filtersFormColumns(2)
             ->actions([
                 Action::make('pulang')
                     ->icon('heroicon-o-arrow-right-end-on-rectangle')
