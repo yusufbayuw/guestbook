@@ -96,7 +96,8 @@ class GuestResource extends Resource
                 Filter::make('created_at')
                     ->form([
                         DatePicker::make('created_from')
-                            ->label('Dari'),
+                            ->label('Dari')
+                            ->maxDate(now()->subDay()),
                         DatePicker::make('created_until')
                             ->label('Sampai')
                             ->default(now())
