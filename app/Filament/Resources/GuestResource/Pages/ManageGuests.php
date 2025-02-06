@@ -21,7 +21,7 @@ class ManageGuests extends ManageRecords
 
     public function getTabs(): array
     {
-        $tabs = ['semua' => Tab::make('semua')->badge($this->getModel()::whereNull('pulang')->count())];
+        $tabs = ['semua' => Tab::make('semua')->label('Semua')->badge($this->getModel()::whereNull('pulang')->count())];
 
         //$tabs = [];
 
