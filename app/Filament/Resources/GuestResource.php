@@ -11,6 +11,7 @@ use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Filter;
+use Filament\Support\Enums\MaxWidth;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Forms\Components\DatePicker;
 use Illuminate\Database\Eloquent\Builder;
@@ -97,29 +98,32 @@ class GuestResource extends Resource
                 Filter::make('created_at')
                     ->form([
                         DatePicker::make('created_from')
-                            ->label('Dari')
+                            ->label('Dari: ')
+                            ->inlineLabel()
                             ->maxDate(now()->subDay())
-                            ->columns(1),
+                            ->columnSpan(2), // Each field takes 1 column
                         DatePicker::make('created_until')
-                            ->label('Sampai')
+                            ->label('s.d.')
+                            ->inlineLabel()
                             ->default(now())
                             ->maxDate(now())
-                            ->columns(1),
+                            ->columnSpan(2),
                     ])
+                    ->columns(4) // Ensure the form has 2 columns
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
                             ->when(
-                                $data['created_from'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                                $data['created_from'] ?? null,
+                                fn(Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
                             )
                             ->when(
-                                $data['created_until'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                                $data['created_until'] ?? null,
+                                fn(Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
                             );
                     }),
             ], layout: FiltersLayout::AboveContent)
             ->hiddenFilterIndicators()
-            ->filtersFormColumns(2)
+            ->defaultSort('pulang','asc')
             ->actions([
                 Action::make('pulang')
                     ->icon('heroicon-o-arrow-right-end-on-rectangle')
@@ -133,7 +137,7 @@ class GuestResource extends Resource
 
                         $record->save();
                     })
-                    ->hidden(fn ($record) => $record->pulang ? true : false),
+                    ->hidden(fn($record) => $record->pulang ? true : false),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
