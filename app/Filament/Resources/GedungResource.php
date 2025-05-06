@@ -19,6 +19,16 @@ class GedungResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getEloquentQuery(): Builder
+    {
+        $userAuth = auth()->user();
+        if ($userAuth->hasRole('super_admin')) {
+            return parent::getEloquentQuery();
+        } else {
+            return parent::getEloquentQuery()->whereIn('id', $userAuth->gedung->pluck('gedungs.id')->toArray());
+        }
+    } 
+
     public static function form(Form $form): Form
     {
         return $form

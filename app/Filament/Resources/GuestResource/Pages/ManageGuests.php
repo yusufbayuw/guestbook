@@ -25,9 +25,18 @@ class ManageGuests extends ManageRecords
 
         //$tabs = [];
 
-        $gedungs = Gedung::withCount('guest')
-            ->has('guest')
-            ->get();
+        // for super admin all gedung, for other user only gedung that user has
+        $userAuth = auth()->user();
+        if ($userAuth->hasRole('super_admin')) {
+            $gedungs = Gedung::withCount('guest')
+                ->has('guest')
+                ->get();
+        } else {
+            $gedungs = Gedung::withCount('guest')
+                ->has('guest')
+                ->whereIn('id', $userAuth->gedung->pluck('id')->toArray())
+                ->get();
+        }
 
         foreach ($gedungs as $gedung) {
             $name = $gedung->nama;

@@ -42,6 +42,9 @@ class UserResource extends Resource
                 Forms\Components\CheckboxList::make('roles')
                     ->relationship('roles', 'name')
                     ->searchable(),
+                Forms\Components\CheckboxList::make('gedung')
+                    ->relationship('gedung', 'nama')
+                    ->searchable(),
             ]);
     }
 

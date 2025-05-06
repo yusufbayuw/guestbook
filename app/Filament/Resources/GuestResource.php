@@ -29,6 +29,17 @@ class GuestResource extends Resource
 
     protected static ?string $slug = 'guest';
 
+    public static function getEloquentQuery(): Builder
+    {
+        $userAuth = auth()->user();
+        if ($userAuth->hasRole('super_admin')) {
+            return parent::getEloquentQuery();
+        } else {
+            //dd($userAuth->gedung->pluck('id')->toArray());
+            return parent::getEloquentQuery()->whereIn('gedung_id', $userAuth->gedung->pluck('id')->toArray());
+        }
+    } 
+
     public static function form(Form $form): Form
     {
         return $form

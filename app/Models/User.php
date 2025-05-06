@@ -54,4 +54,11 @@ class User extends Authenticatable implements FilamentUser
     {
         return true;
     }
+
+    public function gedung()
+    {
+        return $this->belongsToMany(Gedung::class, 'user_gedungs', 'user_id', 'gedung_id')
+            ->withPivot('id')
+            ->withTimestamps();
+    }
 }
