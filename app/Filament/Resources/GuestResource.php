@@ -95,6 +95,27 @@ class GuestResource extends Resource
                 Tables\Columns\TextColumn::make('foto_pulang')
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('lama_kunjungan')
+                    ->formatStateUsing(function ($state) {
+                        if (!$state) {
+                            return '-';
+                        }
+                        $totalSeconds = (float)$state * 3600;
+                        $hours = floor($totalSeconds / 3600);
+                        $minutes = floor(($totalSeconds % 3600) / 60);
+                        $seconds = floor($totalSeconds % 60);
+
+                        $result = '';
+                        if ($hours > 0) {
+                            $result .= $hours . ' jam ';
+                        }
+                        if ($minutes > 0) {
+                            $result .= $minutes . ' menit ';
+                        }
+                        if ($seconds > 0 || $result === '') {
+                            $result .= $seconds . ' detik';
+                        }
+                        return trim($result);
+                    })
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
