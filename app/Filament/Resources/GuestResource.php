@@ -132,13 +132,14 @@ class GuestResource extends Resource
                         DatePicker::make('created_from')
                             ->label('Dari: ')
                             ->inlineLabel()
-                            ->maxDate(now()->subDay())
+                            ->default(now()->startOfDay())
+                            ->maxDate(now()->subDay()->startOfDay())
                             ->columnSpan(2), // Each field takes 1 column
                         DatePicker::make('created_until')
                             ->label('s.d.')
                             ->inlineLabel()
-                            ->default(now())
-                            ->maxDate(now())
+                            ->default(now()->endOfDay())
+                            ->maxDate(now()->endOfDay())
                             ->columnSpan(2),
                     ])
                     ->columns(4) // Ensure the form has 2 columns
